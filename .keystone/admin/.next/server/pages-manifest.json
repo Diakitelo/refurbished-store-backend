@@ -1,6 +1,23 @@
 {
   "/_app": "pages/_app.js",
+  "/api/__keystone_api_build": "pages/api/__keystone_api_build.js",
+  "/brands/[id]": "pages/brands/[id].html",
+  "/brands": "pages/brands.html",
+  "/categories/[id]": "pages/categories/[id].html",
+  "/categories": "pages/categories.html",
+  "/category-images/[id]": "pages/category-images/[id].html",
+  "/category-images": "pages/category-images.html",
+  "/": "pages/index.html",
+  "/init": "pages/init.html",
+  "/no-access": "pages/no-access.html",
+  "/product-images/[id]": "pages/product-images/[id].html",
+  "/product-images": "pages/product-images.html",
+  "/products/[id]": "pages/products/[id].html",
+  "/products": "pages/products.html",
+  "/signin": "pages/signin.html",
+  "/users/[id]": "pages/users/[id].html",
+  "/users": "pages/users.html",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/404": "pages/404.html"
 }

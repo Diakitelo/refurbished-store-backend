@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default as config } from '../../../../keystone';\nexport default function (req, res) {\n  return res.status(500);\n}","map":null,"metadata":{},"sourceType":"module"}

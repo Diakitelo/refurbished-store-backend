@@ -13,7 +13,7 @@ import { ProductImage } from './schemas/ProductImage';
 import { CategoryImage } from './schemas/CategoryImage';
 
 const databaseURL =
-  process.env.DATABASE_URL || 'mongodb://localhost/keystone-phone-store';
+  process.env.MONGODB_URI || 'mongodb://localhost/keystone-phone-store';
 
 const sessionConfig = {
   maxAge: 60 * 60 * 24 * 360, // How long they stay signed in?

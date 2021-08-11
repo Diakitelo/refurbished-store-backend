@@ -1,9 +1,12 @@
 """ A keystone list """
 type User {
   id: ID!
+  firstName: String
   name: String
+  lastName: String
   email: String
   password_is_set: Boolean
+  isAcceptedNewsletter: Boolean
   passwordResetToken_is_set: Boolean
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -19,6 +22,24 @@ input UserWhereInput {
   id_not: ID
   id_in: [ID]
   id_not_in: [ID]
+  firstName: String
+  firstName_not: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  firstName_i: String
+  firstName_not_i: String
+  firstName_contains_i: String
+  firstName_not_contains_i: String
+  firstName_starts_with_i: String
+  firstName_not_starts_with_i: String
+  firstName_ends_with_i: String
+  firstName_not_ends_with_i: String
+  firstName_in: [String]
+  firstName_not_in: [String]
   name: String
   name_not: String
   name_contains: String
@@ -37,6 +58,24 @@ input UserWhereInput {
   name_not_ends_with_i: String
   name_in: [String]
   name_not_in: [String]
+  lastName: String
+  lastName_not: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  lastName_i: String
+  lastName_not_i: String
+  lastName_contains_i: String
+  lastName_not_contains_i: String
+  lastName_starts_with_i: String
+  lastName_not_starts_with_i: String
+  lastName_ends_with_i: String
+  lastName_not_ends_with_i: String
+  lastName_in: [String]
+  lastName_not_in: [String]
   email: String
   email_not: String
   email_contains: String
@@ -56,6 +95,8 @@ input UserWhereInput {
   email_in: [String]
   email_not_in: [String]
   password_is_set: Boolean
+  isAcceptedNewsletter: Boolean
+  isAcceptedNewsletter_not: Boolean
   passwordResetToken_is_set: Boolean
   passwordResetIssuedAt: String
   passwordResetIssuedAt_not: String
@@ -99,10 +140,16 @@ input UserWhereUniqueInput {
 enum SortUsersBy {
   id_ASC
   id_DESC
+  firstName_ASC
+  firstName_DESC
   name_ASC
   name_DESC
+  lastName_ASC
+  lastName_DESC
   email_ASC
   email_DESC
+  isAcceptedNewsletter_ASC
+  isAcceptedNewsletter_DESC
   passwordResetIssuedAt_ASC
   passwordResetIssuedAt_DESC
   passwordResetRedeemedAt_ASC
@@ -114,9 +161,12 @@ enum SortUsersBy {
 }
 
 input UserUpdateInput {
+  firstName: String
   name: String
+  lastName: String
   email: String
   password: String
+  isAcceptedNewsletter: Boolean
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String
@@ -131,9 +181,12 @@ input UsersUpdateInput {
 }
 
 input UserCreateInput {
+  firstName: String
   name: String
+  lastName: String
   email: String
   password: String
+  isAcceptedNewsletter: Boolean
   passwordResetToken: String
   passwordResetIssuedAt: String
   passwordResetRedeemedAt: String

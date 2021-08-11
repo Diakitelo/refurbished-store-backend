@@ -1,0 +1,1 @@
+{"ast":null,"code":"import React from 'react';\nimport { ListPage } from '@keystone-next/admin-ui/pages/ListPage';\nexport default function List() {\n  return /*#__PURE__*/React.createElement(ListPage, {\n    listKey: \"Product\"\n  });\n}","map":null,"metadata":{},"sourceType":"module"}

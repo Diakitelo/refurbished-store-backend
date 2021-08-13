@@ -11,6 +11,7 @@ import { Category } from './schemas/Category';
 import { Product } from './schemas/Product';
 import { ProductImage } from './schemas/ProductImage';
 import { CategoryImage } from './schemas/CategoryImage';
+import { sendPasswordResetEmail } from './lib/mail';
 
 const databaseURL =
   process.env.MONGODB_URI || 'mongodb://localhost/keystone-phone-store';
@@ -27,6 +28,13 @@ const { withAuth } = createAuth({
   initFirstItem: {
     fields: ['name', 'email', 'password'],
     // TODO: add initial roles her
+  },
+  passwordResetLink: {
+    async sendToken(args) {
+      // send the email
+      console.log(args);
+      await sendPasswordResetEmail(args.token, args.identity);
+    },
   },
 });
 

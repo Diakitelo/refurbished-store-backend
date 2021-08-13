@@ -101,6 +101,13 @@ module.exports = __webpack_require__("u4g4");
 
 /***/ }),
 
+/***/ "1muL":
+/***/ (function(module, exports) {
+
+module.exports = require("nodemailer");
+
+/***/ }),
+
 /***/ "3SxR":
 /***/ (function(module, exports) {
 
@@ -361,7 +368,54 @@ const CategoryImage = Object(schema_["list"])({
     }
   }
 });
+// EXTERNAL MODULE: external "nodemailer"
+var external_nodemailer_ = __webpack_require__("1muL");
+
+// CONCATENATED MODULE: /Users/admin/Documents/projetPerso/phone-store-backend/lib/mail.ts
+
+const transport = Object(external_nodemailer_["createTransport"])({
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS
+  }
+});
+
+function makeANiceEmail(text) {
+  return `
+    <div className="email" style="
+      border: 1px solid black;
+      padding: 20px;
+      font-family: sans-serif;
+      line-height: 2;
+      font-size: 20px;
+    ">
+      <h2>Hello!</h2>
+      <p>${text}</p>
+
+      <p>😘, Diakite M</p>
+    </div>
+  `;
+}
+
+async function sendPasswordResetEmail(resetToken, to) {
+  // email the user a token
+  const info = await transport.sendMail({
+    to,
+    from: 'Diakitemoha40@refundtech.com',
+    subject: 'Nouveau mot de passe',
+    html: makeANiceEmail(`Pour créer votre nouveau mot de passe, cliquez sur le lien suivant :
+      <a href="${process.env.FRONTEND_URL}/forgotpassword/reset?token=${resetToken}&for=${to}">Réinitialiser mon mot de passe</a>
+    `)
+  });
+
+  if (process.env.MAIL_USER.includes('ethereal.email')) {
+    console.log(`💌 Message Sent!  Preview it at ${Object(external_nodemailer_["getTestMessageUrl"])(info)}`);
+  }
+}
 // CONCATENATED MODULE: /Users/admin/Documents/projetPerso/phone-store-backend/keystone.ts
+
 
 
 
@@ -386,6 +440,14 @@ const {
   secretField: 'password',
   initFirstItem: {
     fields: ['name', 'email', 'password'] // TODO: add initial roles her
+
+  },
+  passwordResetLink: {
+    async sendToken(args) {
+      // send the email
+      console.log(args);
+      await sendPasswordResetEmail(args.token, args.identity);
+    }
 
   }
 });

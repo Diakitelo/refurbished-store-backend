@@ -7,6 +7,13 @@ type Scalars = {
   readonly JSON: import('@keystone-next/types').JSONValue;
 };
 
+export type CartItemRelateToManyInput = {
+  readonly create?: ReadonlyArray<CartItemCreateInput | null> | null;
+  readonly connect?: ReadonlyArray<CartItemWhereUniqueInput | null> | null;
+  readonly disconnect?: ReadonlyArray<CartItemWhereUniqueInput | null> | null;
+  readonly disconnectAll?: Scalars['Boolean'] | null;
+};
+
 export type UserWhereInput = {
   readonly AND?: ReadonlyArray<UserWhereInput | null> | null;
   readonly OR?: ReadonlyArray<UserWhereInput | null> | null;
@@ -89,6 +96,9 @@ export type UserWhereInput = {
   readonly password_is_set?: Scalars['Boolean'] | null;
   readonly isAcceptedNewsletter?: Scalars['Boolean'] | null;
   readonly isAcceptedNewsletter_not?: Scalars['Boolean'] | null;
+  readonly cart_every?: CartItemWhereInput | null;
+  readonly cart_some?: CartItemWhereInput | null;
+  readonly cart_none?: CartItemWhereInput | null;
   readonly passwordResetToken_is_set?: Scalars['Boolean'] | null;
   readonly passwordResetIssuedAt?: Scalars['String'] | null;
   readonly passwordResetIssuedAt_not?: Scalars['String'] | null;
@@ -158,6 +168,8 @@ export type SortUsersBy =
   | 'email_DESC'
   | 'isAcceptedNewsletter_ASC'
   | 'isAcceptedNewsletter_DESC'
+  | 'cart_ASC'
+  | 'cart_DESC'
   | 'passwordResetIssuedAt_ASC'
   | 'passwordResetIssuedAt_DESC'
   | 'passwordResetRedeemedAt_ASC'
@@ -174,6 +186,7 @@ export type UserUpdateInput = {
   readonly email?: Scalars['String'] | null;
   readonly password?: Scalars['String'] | null;
   readonly isAcceptedNewsletter?: Scalars['Boolean'] | null;
+  readonly cart?: CartItemRelateToManyInput | null;
   readonly passwordResetToken?: Scalars['String'] | null;
   readonly passwordResetIssuedAt?: Scalars['String'] | null;
   readonly passwordResetRedeemedAt?: Scalars['String'] | null;
@@ -194,6 +207,7 @@ export type UserCreateInput = {
   readonly email?: Scalars['String'] | null;
   readonly password?: Scalars['String'] | null;
   readonly isAcceptedNewsletter?: Scalars['Boolean'] | null;
+  readonly cart?: CartItemRelateToManyInput | null;
   readonly passwordResetToken?: Scalars['String'] | null;
   readonly passwordResetIssuedAt?: Scalars['String'] | null;
   readonly passwordResetRedeemedAt?: Scalars['String'] | null;
@@ -604,6 +618,76 @@ export type ProductsCreateInput = {
   readonly data?: ProductCreateInput | null;
 };
 
+export type ProductRelateToOneInput = {
+  readonly create?: ProductCreateInput | null;
+  readonly connect?: ProductWhereUniqueInput | null;
+  readonly disconnect?: ProductWhereUniqueInput | null;
+  readonly disconnectAll?: Scalars['Boolean'] | null;
+};
+
+export type UserRelateToOneInput = {
+  readonly create?: UserCreateInput | null;
+  readonly connect?: UserWhereUniqueInput | null;
+  readonly disconnect?: UserWhereUniqueInput | null;
+  readonly disconnectAll?: Scalars['Boolean'] | null;
+};
+
+export type CartItemWhereInput = {
+  readonly AND?: ReadonlyArray<CartItemWhereInput | null> | null;
+  readonly OR?: ReadonlyArray<CartItemWhereInput | null> | null;
+  readonly id?: Scalars['ID'] | null;
+  readonly id_not?: Scalars['ID'] | null;
+  readonly id_in?: ReadonlyArray<Scalars['ID'] | null> | null;
+  readonly id_not_in?: ReadonlyArray<Scalars['ID'] | null> | null;
+  readonly quantity?: Scalars['Int'] | null;
+  readonly quantity_not?: Scalars['Int'] | null;
+  readonly quantity_lt?: Scalars['Int'] | null;
+  readonly quantity_lte?: Scalars['Int'] | null;
+  readonly quantity_gt?: Scalars['Int'] | null;
+  readonly quantity_gte?: Scalars['Int'] | null;
+  readonly quantity_in?: ReadonlyArray<Scalars['Int'] | null> | null;
+  readonly quantity_not_in?: ReadonlyArray<Scalars['Int'] | null> | null;
+  readonly product?: ProductWhereInput | null;
+  readonly product_is_null?: Scalars['Boolean'] | null;
+  readonly user?: UserWhereInput | null;
+  readonly user_is_null?: Scalars['Boolean'] | null;
+};
+
+export type CartItemWhereUniqueInput = {
+  readonly id: Scalars['ID'];
+};
+
+export type SortCartItemsBy =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'quantity_ASC'
+  | 'quantity_DESC'
+  | 'product_ASC'
+  | 'product_DESC'
+  | 'user_ASC'
+  | 'user_DESC';
+
+export type CartItemUpdateInput = {
+  readonly quantity?: Scalars['Int'] | null;
+  readonly product?: ProductRelateToOneInput | null;
+  readonly user?: UserRelateToOneInput | null;
+};
+
+export type CartItemsUpdateInput = {
+  readonly id: Scalars['ID'];
+  readonly data?: CartItemUpdateInput | null;
+};
+
+export type CartItemCreateInput = {
+  readonly quantity?: Scalars['Int'] | null;
+  readonly product?: ProductRelateToOneInput | null;
+  readonly user?: UserRelateToOneInput | null;
+};
+
+export type CartItemsCreateInput = {
+  readonly data?: CartItemCreateInput | null;
+};
+
 export type CloudinaryImageFormat = {
   readonly prettyName?: Scalars['String'] | null;
   readonly width?: Scalars['String'] | null;
@@ -634,13 +718,6 @@ export type CloudinaryImageFormat = {
   readonly density?: Scalars['String'] | null;
   readonly flags?: Scalars['String'] | null;
   readonly transformation?: Scalars['String'] | null;
-};
-
-export type ProductRelateToOneInput = {
-  readonly create?: ProductCreateInput | null;
-  readonly connect?: ProductWhereUniqueInput | null;
-  readonly disconnect?: ProductWhereUniqueInput | null;
-  readonly disconnectAll?: Scalars['Boolean'] | null;
 };
 
 export type ProductImageWhereInput = {
@@ -838,6 +915,7 @@ export type UserListTypeInfo = {
     | 'email'
     | 'password'
     | 'isAcceptedNewsletter'
+    | 'cart'
     | 'passwordResetToken'
     | 'passwordResetIssuedAt'
     | 'passwordResetRedeemedAt'
@@ -852,6 +930,7 @@ export type UserListTypeInfo = {
     readonly email?: string | null;
     readonly password?: string | null;
     readonly isAcceptedNewsletter?: boolean | null;
+    readonly cart?: string | null;
     readonly passwordResetToken?: string | null;
     readonly passwordResetIssuedAt?: Date | null;
     readonly passwordResetRedeemedAt?: Date | null;
@@ -1009,6 +1088,40 @@ export type ProductListFn = (
   ProductListTypeInfo['fields']
 >;
 
+export type CartItemListTypeInfo = {
+  key: 'CartItem';
+  fields: 'id' | 'quantity' | 'product' | 'user';
+  backing: {
+    readonly id: string;
+    readonly quantity?: number | null;
+    readonly product?: string | null;
+    readonly user?: string | null;
+  };
+  inputs: {
+    where: CartItemWhereInput;
+    create: CartItemCreateInput;
+    update: CartItemUpdateInput;
+  };
+  args: {
+    listQuery: {
+      readonly where?: CartItemWhereInput | null;
+      readonly sortBy?: ReadonlyArray<SortCartItemsBy> | null;
+      readonly first?: Scalars['Int'] | null;
+      readonly skip?: Scalars['Int'] | null;
+    };
+  };
+};
+
+export type CartItemListFn = (
+  listConfig: import('@keystone-next/keystone/schema').ListConfig<
+    CartItemListTypeInfo,
+    CartItemListTypeInfo['fields']
+  >
+) => import('@keystone-next/keystone/schema').ListConfig<
+  CartItemListTypeInfo,
+  CartItemListTypeInfo['fields']
+>;
+
 export type ProductImageListTypeInfo = {
   key: 'ProductImage';
   fields: 'id' | 'image' | 'altText' | 'product';
@@ -1082,6 +1195,7 @@ export type KeystoneListsTypeInfo = {
   readonly Brand: BrandListTypeInfo;
   readonly Category: CategoryListTypeInfo;
   readonly Product: ProductListTypeInfo;
+  readonly CartItem: CartItemListTypeInfo;
   readonly ProductImage: ProductImageListTypeInfo;
   readonly CategoryImage: CategoryImageListTypeInfo;
 };

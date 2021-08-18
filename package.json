@@ -5,7 +5,7 @@
   "author": "Wes Bos",
   "license": "MIT",
   "scripts": {
-    "deploy": "keystone-next build && keystone-next prisma migrate deploy",
+    "deploy": "keystone-next build",
     "dev": "keystone-next dev",
     "start": "keystone-next start",
     "seed-data": "keystone-next --seed-data"

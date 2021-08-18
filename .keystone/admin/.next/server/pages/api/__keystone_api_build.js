@@ -192,7 +192,19 @@ const User = Object(schema_["list"])({
       isUnique: true
     }),
     password: Object(fields_["password"])(),
-    isAcceptedNewsletter: Object(fields_["checkbox"])() // todo: add roles, cart and orders
+    isAcceptedNewsletter: Object(fields_["checkbox"])(),
+    cart: Object(fields_["relationship"])({
+      ref: 'CartItem.user',
+      many: true,
+      ui: {
+        createView: {
+          fieldMode: 'hidden'
+        },
+        itemView: {
+          fieldMode: 'read'
+        }
+      }
+    }) // TODO: Add roles, cart an orders
 
   }
 });
@@ -300,6 +312,29 @@ const Product = Object(schema_["list"])({
     }),
     originalPrice: Object(fields_["integer"])({
       isRequired: true
+    })
+  }
+});
+// CONCATENATED MODULE: /Users/admin/Documents/projetPerso/phone-store-backend/schemas/CartItem.ts
+
+
+const CartItem = Object(schema_["list"])({
+  // TODO: custom label in here
+  ui: {
+    listView: {
+      initialColumns: ['product', 'quantity', 'user']
+    }
+  },
+  fields: {
+    quantity: Object(fields_["integer"])({
+      defaultValue: 1,
+      isRequired: true
+    }),
+    product: Object(fields_["relationship"])({
+      ref: 'Product'
+    }),
+    user: Object(fields_["relationship"])({
+      ref: 'User.cart'
     })
   }
 });
@@ -414,7 +449,86 @@ async function sendPasswordResetEmail(resetToken, to) {
     console.log(`💌 Message Sent!  Preview it at ${Object(external_nodemailer_["getTestMessageUrl"])(info)}`);
   }
 }
+// CONCATENATED MODULE: /Users/admin/Documents/projetPerso/phone-store-backend/mutations/addToCart.ts
+/* eslint-disable */
+async function addToCart(root, {
+  productId
+}, context) {
+  console.log('ADDING TO CART!'); // 1. Query the current user see if they are signed in
+
+  const sesh = context.session;
+
+  if (!sesh.itemId) {
+    throw new Error('You must be logged in to do this!');
+  } // 2. Query the current users cart
+
+
+  const allCartItems = await context.lists.CartItem.findMany({
+    where: {
+      user: {
+        id: sesh.itemId
+      },
+      product: {
+        id: productId
+      }
+    },
+    resolveFields: 'id,quantity'
+  });
+  const [existingCartItem] = allCartItems;
+
+  if (existingCartItem) {
+    console.log(existingCartItem);
+    console.log(`There are already ${existingCartItem.quantity}, increment by 1!`); // 3. See if the current item is in their cart
+    // 4. if itis, increment by 1
+
+    return await context.lists.CartItem.updateOne({
+      id: existingCartItem.id,
+      data: {
+        quantity: existingCartItem.quantity + 1
+      },
+      resolveFields: false
+    });
+  } // 4. if it isnt, create a new cart item!
+
+
+  return await context.lists.CartItem.createOne({
+    data: {
+      product: {
+        connect: {
+          id: productId
+        }
+      },
+      user: {
+        connect: {
+          id: sesh.itemId
+        }
+      }
+    },
+    resolveFields: false
+  });
+}
+
+/* harmony default export */ var mutations_addToCart = (addToCart);
+// CONCATENATED MODULE: /Users/admin/Documents/projetPerso/phone-store-backend/mutations/index.ts
+
+ // make a fake graphql tagged template literal
+
+const graphql = String.raw;
+const extendGraphqlSchema = Object(schema_["graphQLSchemaExtension"])({
+  typeDefs: graphql`
+    type Mutation {
+      addToCart(productId: ID): CartItem
+    }
+  `,
+  resolvers: {
+    Mutation: {
+      addToCart: mutations_addToCart
+    }
+  }
+});
 // CONCATENATED MODULE: /Users/admin/Documents/projetPerso/phone-store-backend/keystone.ts
+
+
 
 
 
@@ -468,9 +582,11 @@ const {
     Brand: Brand,
     Category: Category,
     Product: Product,
+    CartItem: CartItem,
     ProductImage: ProductImage,
     CategoryImage: CategoryImage
   }),
+  extendGraphqlSchema: extendGraphqlSchema,
   ui: {
     // Show the UI only for poeple who pass this test
     isAccessAllowed: ({

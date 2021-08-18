@@ -9,9 +9,11 @@ import { User } from './schemas/User';
 import { Brand } from './schemas/Brand';
 import { Category } from './schemas/Category';
 import { Product } from './schemas/Product';
+import { CartItem } from './schemas/CartItem';
 import { ProductImage } from './schemas/ProductImage';
 import { CategoryImage } from './schemas/CategoryImage';
 import { sendPasswordResetEmail } from './lib/mail';
+import { extendGraphqlSchema } from './mutations';
 
 const databaseURL =
   process.env.MONGODB_URI || 'mongodb://localhost/keystone-phone-store';
@@ -56,9 +58,11 @@ export default withAuth(
       Brand,
       Category,
       Product,
+      CartItem,
       ProductImage,
       CategoryImage,
     }),
+    extendGraphqlSchema,
     ui: {
       // Show the UI only for poeple who pass this test
       isAccessAllowed: ({ session }) => !!session?.data,

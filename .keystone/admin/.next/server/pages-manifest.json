@@ -3,6 +3,8 @@
   "/api/__keystone_api_build": "pages/api/__keystone_api_build.js",
   "/brands/[id]": "pages/brands/[id].html",
   "/brands": "pages/brands.html",
+  "/cart-items/[id]": "pages/cart-items/[id].html",
+  "/cart-items": "pages/cart-items.html",
   "/categories/[id]": "pages/categories/[id].html",
   "/categories": "pages/categories.html",
   "/category-images/[id]": "pages/category-images/[id].html",

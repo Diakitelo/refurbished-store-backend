@@ -423,6 +423,7 @@ type Product {
   color: String
   memory: Int
   state: String
+  marque: String
   shortDescription: String
   description: String
   photos(where: ProductImageWhereInput, search: String, sortBy: [SortProductImagesBy!], orderBy: String, first: Int, skip: Int): [ProductImage!]!
@@ -523,6 +524,24 @@ input ProductWhereInput {
   state_not_ends_with_i: String
   state_in: [String]
   state_not_in: [String]
+  marque: String
+  marque_not: String
+  marque_contains: String
+  marque_not_contains: String
+  marque_starts_with: String
+  marque_not_starts_with: String
+  marque_ends_with: String
+  marque_not_ends_with: String
+  marque_i: String
+  marque_not_i: String
+  marque_contains_i: String
+  marque_not_contains_i: String
+  marque_starts_with_i: String
+  marque_not_starts_with_i: String
+  marque_ends_with_i: String
+  marque_not_ends_with_i: String
+  marque_in: [String]
+  marque_not_in: [String]
   shortDescription: String
   shortDescription_not: String
   shortDescription_contains: String
@@ -629,6 +648,8 @@ enum SortProductsBy {
   memory_DESC
   state_ASC
   state_DESC
+  marque_ASC
+  marque_DESC
   shortDescription_ASC
   shortDescription_DESC
   description_ASC
@@ -653,6 +674,7 @@ input ProductUpdateInput {
   color: String
   memory: Int
   state: String
+  marque: String
   shortDescription: String
   description: String
   photos: ProductImageRelateToManyInput
@@ -674,6 +696,7 @@ input ProductCreateInput {
   color: String
   memory: Int
   state: String
+  marque: String
   shortDescription: String
   description: String
   photos: ProductImageRelateToManyInput

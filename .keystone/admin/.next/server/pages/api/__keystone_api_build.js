@@ -275,6 +275,9 @@ const Product = Object(schema_["list"])({
     state: Object(fields_["text"])({
       isRequired: true
     }),
+    marque: Object(fields_["text"])({
+      isRequired: true
+    }),
     shortDescription: Object(fields_["text"])({
       isRequired: true
     }),

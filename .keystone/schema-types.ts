@@ -470,6 +470,24 @@ export type ProductWhereInput = {
   readonly state_not_ends_with_i?: Scalars['String'] | null;
   readonly state_in?: ReadonlyArray<Scalars['String'] | null> | null;
   readonly state_not_in?: ReadonlyArray<Scalars['String'] | null> | null;
+  readonly marque?: Scalars['String'] | null;
+  readonly marque_not?: Scalars['String'] | null;
+  readonly marque_contains?: Scalars['String'] | null;
+  readonly marque_not_contains?: Scalars['String'] | null;
+  readonly marque_starts_with?: Scalars['String'] | null;
+  readonly marque_not_starts_with?: Scalars['String'] | null;
+  readonly marque_ends_with?: Scalars['String'] | null;
+  readonly marque_not_ends_with?: Scalars['String'] | null;
+  readonly marque_i?: Scalars['String'] | null;
+  readonly marque_not_i?: Scalars['String'] | null;
+  readonly marque_contains_i?: Scalars['String'] | null;
+  readonly marque_not_contains_i?: Scalars['String'] | null;
+  readonly marque_starts_with_i?: Scalars['String'] | null;
+  readonly marque_not_starts_with_i?: Scalars['String'] | null;
+  readonly marque_ends_with_i?: Scalars['String'] | null;
+  readonly marque_not_ends_with_i?: Scalars['String'] | null;
+  readonly marque_in?: ReadonlyArray<Scalars['String'] | null> | null;
+  readonly marque_not_in?: ReadonlyArray<Scalars['String'] | null> | null;
   readonly shortDescription?: Scalars['String'] | null;
   readonly shortDescription_not?: Scalars['String'] | null;
   readonly shortDescription_contains?: Scalars['String'] | null;
@@ -560,6 +578,8 @@ export type SortProductsBy =
   | 'memory_DESC'
   | 'state_ASC'
   | 'state_DESC'
+  | 'marque_ASC'
+  | 'marque_DESC'
   | 'shortDescription_ASC'
   | 'shortDescription_DESC'
   | 'description_ASC'
@@ -583,6 +603,7 @@ export type ProductUpdateInput = {
   readonly color?: Scalars['String'] | null;
   readonly memory?: Scalars['Int'] | null;
   readonly state?: Scalars['String'] | null;
+  readonly marque?: Scalars['String'] | null;
   readonly shortDescription?: Scalars['String'] | null;
   readonly description?: Scalars['String'] | null;
   readonly photos?: ProductImageRelateToManyInput | null;
@@ -604,6 +625,7 @@ export type ProductCreateInput = {
   readonly color?: Scalars['String'] | null;
   readonly memory?: Scalars['Int'] | null;
   readonly state?: Scalars['String'] | null;
+  readonly marque?: Scalars['String'] | null;
   readonly shortDescription?: Scalars['String'] | null;
   readonly description?: Scalars['String'] | null;
   readonly photos?: ProductImageRelateToManyInput | null;
@@ -1039,6 +1061,7 @@ export type ProductListTypeInfo = {
     | 'color'
     | 'memory'
     | 'state'
+    | 'marque'
     | 'shortDescription'
     | 'description'
     | 'photos'
@@ -1054,6 +1077,7 @@ export type ProductListTypeInfo = {
     readonly color?: string | null;
     readonly memory?: number | null;
     readonly state?: string | null;
+    readonly marque?: string | null;
     readonly shortDescription?: string | null;
     readonly description?: string | null;
     readonly photos?: string | null;

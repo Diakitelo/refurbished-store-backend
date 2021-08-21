@@ -10,6 +10,7 @@ export const Product = list({
     color: text({ isRequired: true }),
     memory: integer({ isRequired: true }),
     state: text({ isRequired: true }),
+    marque: text({ isRequired: true }),
     shortDescription: text({ isRequired: true }),
     description: text({
       ui: {
